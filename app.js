@@ -24,8 +24,8 @@ app.get('/', async function(req, res) {
     res.send(JSON.stringify({error:"403 Forbidden"}))
 })
 
-app.get('/productByUpc', async function(req, res) {
-  const [rows, fields] = await pool.execute('call GetProductByUPC(?)', [req.query.upc]);
+app.get('/productByUpc/:upc', async function(req, res) {
+  const [rows, fields] = await pool.execute('call GetProductByUPC(?)', [req.params.upc]);
   res.send(JSON.stringify(rows))
 })
 app.get('/productWithImagesByUpc/:upc', async function(req, res) {
@@ -40,12 +40,16 @@ app.get('/allProductsWithImages', async function(req, res) {
   const [rows, fields] = await pool.execute('call GetAllProductsWithImages()');
   res.send(JSON.stringify(rows))
 })
-app.get('/deptProducts', async function(req, res) {
-  const [rows, fields] = await pool.execute('call GetDepartmentProducts(?)', [req.query.id]);
+app.get('/deptProducts/:id', async function(req, res) {
+  const [rows, fields] = await pool.execute('call GetDepartmentProducts(?)', [req.params.id]);
   res.send(JSON.stringify(rows))
 })
-app.get('/deptProductsWithImages', async function(req, res) {
-  const [rows, fields] = await pool.execute('call GetDepartmentProductsWithImages(?)', [req.query.id]);
+app.get('/deptProductsWithImages/:id', async function(req, res) {
+  const [rows, fields] = await pool.execute('call GetDepartmentProductsWithImages(?)', [req.params.id]);
+  res.send(JSON.stringify(rows))
+})
+app.get('/departments', async function(req, res) {
+  const [rows, fields] = await pool.execute('call GetAllDepartments()');
   res.send(JSON.stringify(rows))
 })
 
