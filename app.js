@@ -24,6 +24,10 @@ app.get('/', async function(req, res) {
     res.send(JSON.stringify({error:"403 Forbidden"}))
 })
 
+app.get('/loginUser', async function(req, res) {
+  const [rows, fields] = await pool.execute('call ValidateCredentials(?, ?)', [req.query.email, req.query.password]);
+  res.send(JSON.stringify(rows[0][0]))
+})
 app.get('/productByUpc/:upc', async function(req, res) {
   const [rows, fields] = await pool.execute('call GetProductByUPC(?)', [req.params.upc]);
   res.send(JSON.stringify(rows))
